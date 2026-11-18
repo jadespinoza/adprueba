@@ -36,7 +36,6 @@
             #printable-receipt { position: absolute; left: 0; top: 0; width: 100%; }
         }
     </style>
-    <link rel="icon" type="image/png" href="./assets/favicon.png">
 </head>
 <body class="bg-slate-100 dark:bg-slate-900 text-slate-800 dark:text-slate-100 transition-colors duration-200">
     <div id="root"></div>
@@ -45,7 +44,6 @@
     <script type="text/babel" src="./js/components/ClienteFormulario.js"></script>
     <script type="text/babel" src="./js/components/ConfiguracionDatos.js"></script>
     <script type="text/babel" src="./js/components/ConfiguracionGeneral.js"></script>
-    <script type="text/babel" src="./js/components/ComprasModulo.js"></script>
 
     <script type="text/babel">
         const { useState, useEffect, useMemo } = React;
@@ -319,13 +317,11 @@
             };
 
             // Cálculos
-            const grossTotal = cart.reduce((acc, item) => acc + (item.precio * item.cantidad), 0);
-            const discountAmount = (grossTotal * discount) / 100;
-            const netTotal = grossTotal - discountAmount;
-            // El precio de venta ya incluye el ITBIS
-            const total = netTotal;
-            const subtotal = total / (1 + (itbisRate / 100));
-            const itbis = total - subtotal;
+            const subtotal = cart.reduce((acc, item) => acc + (item.precio * item.cantidad), 0);
+            const discountAmount = (subtotal * discount) / 100;
+            const subtotalNeto = subtotal - discountAmount;
+            const itbis = subtotalNeto * (itbisRate / 100);
+            const total = subtotalNeto + itbis;
 
             // Facturar
             const handleFacturar = () => {
@@ -384,8 +380,8 @@
                             { id: 'inventory', label: 'Inventario & Productos', icon: 'grid' },
                             { id: 'clients', label: 'Clientes & CxC', icon: 'users' },
                             { id: 'suppliers', label: 'Proveedores & CxP', icon: 'truck' },
-                            { id: 'compras', label: 'Módulo de Compras', icon: 'package' },
-                                                    ].map(tab => (
+                            { id: 'config', label: 'Configuración & Datos', icon: 'settings' }
+                        ].map(tab => (
                             <button
                                 key={tab.id}
                                 onClick={() => setActiveTab(tab.id)}
@@ -1008,11 +1004,6 @@
                                     </table>
                                 </div>
                             </div>
-                        )}
-
-                        {/* TAB COMPRAS */}
-                        {activeTab === 'compras' && (
-                            <ComprasModulo />
                         )}
 
                         {/* TAB 6: CONFIGURACIÓN & DATOS (MODULAR INTEGRADO) */}
