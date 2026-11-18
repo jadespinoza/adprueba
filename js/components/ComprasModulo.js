@@ -171,7 +171,7 @@ function ComprasModulo() {
             <div className="bg-white dark:bg-slate-800 p-6 rounded-xl shadow-md border border-slate-200 dark:border-slate-700 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                 <div>
                     <h2 className="text-xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
-                        <span>📦</span> Módulo de Compras y Proveedores
+                        <span>📦</span> Compras
                     </h2>
                     <p className="text-sm text-slate-500 dark:text-slate-400">
                         Registra facturas de proveedores, alimenta tu inventario y utiliza herramientas avanzadas de importación.
